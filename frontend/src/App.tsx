@@ -582,7 +582,7 @@ function App() {
   // Delete a task after confirmation.
   async function handleDelete(id: number) {
     const confirmed = window.confirm(
-      'Kya tum sach mein ye task delete karna chahte ho?',
+      'Do you want to delete this task?',
     )
 
     if (!confirmed) {
@@ -753,12 +753,12 @@ function App() {
 
                 <p>
                   {notificationPermission === 'unsupported'
-                    ? 'Is browser mein system notifications supported nahi hain.'
+                    ? 'System notification not supported in this browser.'
                     : notificationPermission === 'denied'
-                      ? 'Browser permission blocked hai. Site settings mein notifications allow karo.'
+                      ? 'Browser permission is blocked. Allow notification'
                       : notificationsEnabled
-                        ? 'Task reminders enabled hain.'
-                        : 'Task reminders abhi disabled hain.'}
+                        ? 'Task reminders is enabled.'
+                        : 'Task reminders is disabled.'}
                 </p>
 
                 {notificationPermission !== 'unsupported' &&
@@ -785,7 +785,7 @@ function App() {
                 <div className="notification-empty">
                   <span aria-hidden="true">🔔</span>
                   <h3>No notifications yet</h3>
-                  <p>Task reminders yahan show honge.</p>
+                  <p>Task reminders shown here.</p>
                 </div>
               ) : (
                 <>
@@ -1024,8 +1024,7 @@ function App() {
               <div className="empty-state">
                 <h3>No tasks found</h3>
                 <p>
-                  Abhi koi task nahi hai, ya selected filters se koi task
-                  match nahi karta.
+                  No task available.
                 </p>
               </div>
             ) : (
@@ -1245,8 +1244,8 @@ function App() {
 
               {statuses.length === 0 && !loading && (
                 <p className="form-error">
-                  Task create karne ke liye kam se kam ek status chahiye.
-                  Manage Statuses section se status add karo.
+                  Status is required for crating task.
+                  Add status first.
                 </p>
               )}
             </form>
