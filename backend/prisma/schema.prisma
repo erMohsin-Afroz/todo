@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String?
+  statusId    Int       @map("status_id")
+  categoryId  Int?      @map("category_id")
+  dueAt       DateTime? @map("due_at")
+  reminderAt  DateTime? @map("reminder_at")
+  completedAt DateTime? @map("completed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  status   Status    @relation(fields: [statusId], references: [id], onDelete: Restrict)
+  category Category? @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@index([statusId])
+  @@index([categoryId])
+  @@index([dueAt])
+  @@map("tasks")
+}
+
+model Status {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  colour    String   @default("#64748b")
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tasks Task[]
+
+  @@map("statuses")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  colour    String   @default("#64748b")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tasks Task[]
+
+  @@map("categories")
+}
